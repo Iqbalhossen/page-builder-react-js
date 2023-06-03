@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import Home from "./Home";
+import Editor from "./Editor";
+import { pageLoad } from "./redux/actions/pageAction";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    pageLoad()(dispatch);
+  }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Editor}></Route>
+        <Route exact path="/editor/:pageId" component={Editor}></Route>
+      </Switch>
+    </Router>
   );
 }
 
